@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-content>
+        <form (ngSubmit)="addComment()" [formGroup]="commentForm">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Comment</mat-label>
+                <textarea matInput formControlName="content" rows="3"></textarea>
+            </mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="commentForm.invalid">
+                Send
+            </button>
+        </form>
+    </mat-card-content>
+</mat-card>
+  

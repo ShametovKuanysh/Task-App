@@ -1,0 +1,20 @@
+<div class="task-detail-container" *ngIf="task$ | async as task">
+    <h1>{{ task.title }}</h1>
+    <p>{{ task.description }}</p>
+    
+    <div class="task-meta">
+        <span><strong>Status:</strong> {{ task.status }}</span>
+        <span><strong>Created At:</strong> {{ task.createdAt | date }}</span>
+        <span><strong>Deadline:</strong> {{ task.deadline | date }}</span>
+    </div>
+  
+    <mat-divider></mat-divider>
+  
+    <h2>Comments</h2>
+    <app-comment-form 
+        [taskId]="task.id" 
+        (commentAdded)="refreshComments()">
+    </app-comment-form>
+    <app-comment-list [taskId]="task.id"></app-comment-list>
+</div>
+  

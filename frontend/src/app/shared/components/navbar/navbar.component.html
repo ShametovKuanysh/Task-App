@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <span>TaskApp</span>
+    <!-- <a mat-button routerLink="/tasks">Tasks</a> -->
+    <span class="spacer"></span>
+    <nav>
+        <a *ngIf="!isLoggedIn" mat-button routerLink="/auth/login">Login</a>
+        <a *ngIf="!isLoggedIn" mat-button routerLink="/auth/register">Register</a>
+    
+        <a *ngIf="isLoggedIn" mat-button routerLink="/tasks">Tasks</a>
+        <a *ngIf="isLoggedIn" mat-button routerLink="/tasks">Categories</a>
+        <a *ngIf="isLoggedIn" mat-button routerLink="/profile">Profile</a>
+        <button *ngIf="isLoggedIn" mat-button (click)="logout()">Logout</button>
+    </nav>
+</mat-toolbar>
+  

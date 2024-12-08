@@ -1,0 +1,9 @@
+<ng-container *ngIf="comments$ | async as comments">
+    <mat-card *ngFor="let comment of comments" class="comment-card">
+        <mat-card-content>
+            <p>{{ comment.content }}</p>
+            <p class="comment-meta">— {{ comment.authorName }}, {{ comment.createdAt | date }}</p>
+        </mat-card-content>
+    </mat-card>
+</ng-container>
+  

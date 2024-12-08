@@ -1,0 +1,25 @@
+<div class="auth">
+    <h3>{{isLoginMode ? 'Login' : 'Register'}}</h3>
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="w-100">
+            <mat-label>Username</mat-label>
+            <input id="username" matInput placeholder="Enter username" formControlName="username" name="username" type="text" [required]="true">
+        </mat-form-field>
+        <mat-form-field class="w-100" *ngIf="!isLoginMode">
+            <mat-label>Email</mat-label>
+            <input id="email" matInput placeholder="Enter email" formControlName="email" name="email" type="email">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Enter Password" formControlName="password" name="password" type="password" autocomplete="on" [required]="true">
+        </mat-form-field>
+
+        <div class="btn-center">
+            <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid">{{ isLoginMode ? 'Login' : 'Register'}}</button>
+
+            <button mat-raised-button color="secondary" type="button" (click)="switchMode()">
+                Switch to {{ isLoginMode ? 'Register' : 'Login' }}
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,64 @@
+<div *ngIf="loading$ | async" class="loading">
+    <p>Loading tasks...</p>
+</div>
+  
+<div *ngIf="error$ | async as error" class="error">
+    <p>Error: {{ error }}</p>
+</div>
+<div class="p-1">
+    <button mat-button (click)="openAddTaskModal()">Add task +</button>
+</div>
+<div class="task-controls">
+    <mat-form-field appearance="outline">
+        <mat-select placeholder="Фильтр" (selectionChange)="onFilterChange($event.value)">
+            <mat-option value="all">All</mat-option>
+            <mat-option value="completed">Completed</mat-option>
+            <mat-option value="in progress">In progress</mat-option>
+            <mat-option value="pending">Pending</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-select placeholder="Sort by" (selectionChange)="onSortChange($event.value)">
+            <mat-option value="title">Title</mat-option>
+            <mat-option value="deadline">Deadline</mat-option>
+            <!-- <mat-option value="priority">По приоритету</mat-option> -->
+        </mat-select>
+    </mat-form-field>
+</div>
+<ng-container  *ngIf="!(loading$ | async) && !(error$ | async)">
+    <ng-container *ngIf="(tasks$ | async)?.length; else noTasks">
+        <div class="tasks">
+            <div class="col" *ngFor="let task of tasks$ | async">
+                <div class="card" [routerLink]="['details',task.id]">
+                    <div class="deadline">{{task.deadline | date}}</div>
+                    <div class="priority" 
+                        [ngStyle]="{'background-color': task.priority == 'low' ? '#009d00' : task.priority == 'medium' ? '#eb9312' : '#d00d0d'}"></div>
+                    <h2>{{task.title}}</h2>
+                    <p>{{task.description}}</p>
+                    <div class="stat-act">
+                        <div class="stat" 
+                        [ngStyle]="{'background-color': task.status == 'completed' ? '#b2ebbc' : task.status == 'pending' ? '#dadad3' : '#79b7ea'}">
+                            {{task.status}}
+                        </div>
+                        <div class="row">
+                            <button mat-button (click)="editTask(task)">Edit</button>
+                            <button mat-button (click)="deleteTask(task.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="paginationInfo$ | async as info">
+            <mat-paginator
+                [length]="info.totalTasks"
+                [pageSize]="info.pageSize"
+                [pageIndex]="info.currentPage - 1"
+                (page)="onPageChange($event)">
+            </mat-paginator>
+        </ng-container>
+    </ng-container>
+    <ng-template #noTasks>
+        <p>No tasks found.</p>
+    </ng-template>
+</ng-container>
